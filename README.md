@@ -1,0 +1,1 @@
+# ckeditor-image-uploader
