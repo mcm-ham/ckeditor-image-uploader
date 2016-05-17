@@ -1,0 +1,11 @@
+﻿@model PageModel
+@{
+    ViewBag.Title = "Sample Site";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.CkeditorFor(m => m.HtmlText)
+    <br />
+    <input type="submit" value="Save" />
+}
