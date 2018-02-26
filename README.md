@@ -1,6 +1,6 @@
 # ckeditor-image-uploader
 
-This repo contains a custom written image uploader form for CKeditor. This has been added to example projects for Webforms and MVC.
+This repo contains a custom written image uploader form for CKeditor. This has been added to example projects for Webforms, MVC 5 and .NET Core.
 
 ### Notes
 

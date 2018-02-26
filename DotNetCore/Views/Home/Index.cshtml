@@ -1,0 +1,35 @@
+﻿@model PageModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+@section head {
+    <style>
+        .ck-editor__editable {
+            min-height: 400px;
+        }
+    </style>
+}
+
+@using (Html.BeginForm())
+{
+    <textarea id="editor" name="Content">
+        @Html.Raw(Model.Content)
+    </textarea>
+    <br />
+    <input type="submit" value="Save" />
+}
+
+<script src="//cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
+<script>
+    const config = {
+        filebrowserImageBrowseUrl: "/imagebrowser",
+        filebrowserImageWindowWidth: 780,
+        filebrowserImageWindowHeight: 720,
+        filebrowserBrowseUrl: "/linkbrowser",
+        filebrowserWindowWidth: 350,
+        filebrowserWindowHeight: 500
+    };
+    const editor = document.getElementById("editor");
+    CKEDITOR.replace(editor, config);
+</script>

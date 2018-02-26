@@ -1,0 +1,94 @@
+@page
+@model Ckeditor.Pages.LinkBrowserModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<html>
+<head>
+    <title>Link Browser</title>
+    <style type="text/css">
+        body { margin: 0px; }
+        form { width: 500px; background-color: #E3E3C7; }
+        h1 { padding: 15px; margin: 0px; padding-bottom: 0px; font-family: Arial; font-size: 14pt; color: #737357; }
+        .tab-panel .ajax__tab_body { background-color: #E3E3C7; }
+    </style>
+</head>
+<body>
+    <form method="POST" enctype="multipart/form-data">
+        <div>
+            <h1>Link Browser</h1>
+
+            <table border="1" style="background-color: #F1F1E3; width: 100%; border-spacing: 0px;">
+                <tr>
+                    <td style="vertical-align: top; padding: 10px;">
+                        Folders:<br />
+                        <select asp-for="FileFolder" asp-items="Model.DirectoryList" onchange="document.getElementById('changeDirectory').click()" style="width:160px;"></select>
+                        <input id="changeDirectory" type="submit" asp-page-handler="ChangeDirectory" style="display:none;" />
+                        <input type="submit" asp-page-handler="DeleteFolder" value="Delete" disabled="@(!Model.IsDeleteDirectoryBtnEnabled ? "disabled" : null)" onclick="return confirm('Are you sure you want to delete this folder and all its contents?');">
+                        <input type="hidden" asp-for="NewDirectoryName" />
+                        <input type="submit" asp-page-handler="CreateFolder" value="New" onclick="return newDirectory()" />
+                        <br /><br />
+
+                        <div>
+                            Search:<br />
+                            <input type="text" asp-for="SearchTerms" />
+                            <input type="submit" asp-page-handler="Search" value="Go"/>
+                            <br />
+                        </div>
+                        <select id="fileList" asp-for="FileListValue" asp-items="Model.FileList" size="12" onchange="document.getElementById('selectFile').click()" style="width: 280px; height: 180px;"></select>
+                        <input id="selectFile" type="submit" asp-page-handler="SelectFile" style="display: none;" />
+
+                        <input id="newFileName" type="hidden" asp-for="NewFileName" />
+                        <input type="submit" asp-page-handler="RenameFile" value="Rename" disabled="@(!Model.IsFileBtnsEnabled ? "disabled" : null)" onclick="return renameFile()" />
+                        <input type="submit" asp-page-handler="DeleteFile" value="Delete" disabled="@(!Model.IsFileBtnsEnabled ? "disabled" : null)" onclick="return confirm('Are you sure you want to delete this file?');" />
+                        <br />
+                        <br />
+                        Upload File: (10 MB max)<br />
+                        <input type="file" asp-for="UploadedFile" />
+					    <input type="submit" asp-page-handler="Upload" value="Upload" /><br />
+                        <br />
+                    </td>
+                </tr>
+            </table>
+
+            <div style="text-align: center;">
+                <input type="submit" value="Ok" asp-page-handler="Clear" onclick="ok()" />
+			    <input type="submit" value="Cancel" asp-page-handler="Clear" onclick="closeDialog()" />
+                <br /><br />
+            </div>
+
+        </div>
+    </form>
+
+    <script>
+		document.getElementById("fileList").focus();
+
+		function newDirectory() {
+			var name = prompt('Enter name of folder:');
+			if (name == null || name == '') {
+				return false;
+			}
+			document.getElementById('NewDirectoryName').value = name;
+			return true;
+		}
+
+		function renameFile() {
+			var name = prompt('Enter new filename:','@(Model.FileListValue)');
+			if (name == null || name == '')
+				return false;
+			document.getElementById('newFileName').value = name;
+			return true;
+		}
+
+		function ok() {
+			var dialog = window.top.opener.CKEDITOR.dialog.getCurrent();
+			dialog.setValueOf('info', 'url', encodeURI('@(Model.FileUrl)'));
+			closeDialog();
+		}
+
+		function closeDialog() {
+			window.top.close();
+			window.top.opener.focus();
+		}
+	</script>
+</body>
+</html>
