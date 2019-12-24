@@ -16,7 +16,7 @@ namespace Ckeditor.Pages
 {
     public class ImageBrowserModel : PageModel
     {
-        public ImageBrowserModel(IConfiguration config, IHostingEnvironment env)
+        public ImageBrowserModel(IConfiguration config, IWebHostEnvironment env)
         {
             _config = config;
             _env = env;
@@ -24,7 +24,7 @@ namespace Ckeditor.Pages
 
         //properties
         private IConfiguration _config;
-        private IHostingEnvironment _env;
+        private IWebHostEnvironment _env;
 
         [BindProperty]
         public string ResizeMessage { get; set; }
