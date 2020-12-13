@@ -2,6 +2,8 @@
 
 This repo contains a custom written image uploader form for CKeditor. This has been added to example projects for Webforms, MVC 5 and .NET Core.
 
+<img src="https://github.com/mcm-ham/ckeditor-image-uploader/blob/master/screenshot.jpg?raw=true" style="width:600px" />
+
 ### Notes
 
 * In Webforms example Ckeditor in Controls class is setup to use ScriptManager to allow control to work in AJAX environments. This is not available in ASP.NET 3.0 or earlier unless ASP.NET AJAX Extensions are installed. If not available you can replace ScriptManager with Page.ClientScript.
