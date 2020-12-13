@@ -223,10 +223,10 @@ namespace Ckeditor.Pages
 
         protected async Task<byte[]> ResizeImageBytes(byte[] imageData, uint? desiredWidth, uint? desiredHeight)
         {
-            using (var job = new FluentBuildJob())
+            using (var job = new ImageJob())
             {
                 var res = await job.Decode(imageData).ConstrainWithin(desiredWidth, desiredHeight)
-                    .EncodeToBytes(new LibJpegTurboEncoder()).FinishAsync();
+                    .EncodeToBytes(new MozJpegEncoder(85)).Finish().InProcessAsync();
                 var bytes = res.First.TryGetBytes();
                 return bytes.HasValue ? bytes.Value.Array : new byte[] {};
             }
@@ -234,11 +234,11 @@ namespace Ckeditor.Pages
 
         protected async Task<(int Width, int Height)> GetImageSize(string filename)
         {
-            using (var job = new FluentBuildJob())
+            using (var job = new ImageJob())
             {
                 var imageData = System.IO.File.ReadAllBytes(filename);
                 var res = await job.Decode(imageData)
-                    .EncodeToBytes(new LibJpegTurboEncoder()).FinishAsync();
+                    .EncodeToBytes(new MozJpegEncoder(85)).Finish().InProcessAsync();
                 return (res.First.Width, res.First.Height);
             }
         }
